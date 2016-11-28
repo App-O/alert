@@ -25,8 +25,6 @@ var App = function() {
 
 	function parseArgs() {
 
-		console.log(process.env);
-
 		var args = require('yargs');
 
 		args.usage('Usage: $0 [options]');
