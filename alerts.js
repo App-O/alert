@@ -19,6 +19,8 @@ var App = function() {
 
 	function parseArgs() {
 
+		console.log(process.env);
+		
 		var args = require('yargs');
 
 		args.usage('Usage: $0 [options]');
@@ -49,6 +51,39 @@ var App = function() {
 	}
 
 
+	function tweet(options) {
+
+		try {
+			var client = new Twitter({
+				consumer_key: process.env.TWITTER_CONSUMER_KEY,
+				consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+				access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+				access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+			});
+
+			if (options.status) {
+				var date = new Date();
+				var text = sprintf('%04d-%02d-%02d %02d:%02d:%02d\n%s', date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), options.status);
+
+				client.post('statuses/update', {status: text},  function(error, tweet, response) {
+					if (error)
+						console.log('Tweet failed.');
+						console.log(error);
+					};
+				});
+			}
+			else {
+				console.log('No tweet status specified.');
+			}
+
+		}
+		catch (error) {
+			console.log(error);
+		}
+
+	}
+
+
 	function run(argv) {
 
 		var app = require('http').createServer(function(){});
@@ -74,29 +109,7 @@ var App = function() {
 			});
 
 			socket.on('tweet', function(options) {
-
-				var client = new Twitter({
-					consumer_key: process.env.TWITTER_CONSUMER_KEY,
-					consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-					access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
-					access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
-				});
-
-				if (options.status) {
-					var date = new Date();
-					var text = sprintf('%04d-%02d-%02d %02d:%02d:%02d\n%s', date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), options.status);
-
-					client.post('statuses/update', {status: text},  function(error, tweet, response) {
-						if (error) {
-							console.log('Tweet failed.');
-							console.log(error);
-						};
-					});
-				}
-				else {
-					console.log('No tweet status specified.');
-				}
-
+				tweet(options);
 			});
 
 		});
