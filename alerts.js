@@ -83,8 +83,8 @@ var App = function() {
 				});
 
 				if (options.status) {
-					var now = new Date();
-					var text = sprintf('%s: %s', now.toISOString(), options.status);
+					var date = new Date();
+					var text = sprintf('%04d-%02d-%02d %02d:%02d:%02d', date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), options.status);
 
 					client.post('statuses/update', {status: text},  function(error, tweet, response) {
 						if (error) {
