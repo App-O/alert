@@ -54,6 +54,8 @@ var App = function() {
 
 		io.on('connection', function(socket) {
 
+			console.log('A socket connected.');
+
 			socket.on('disconnect', function() {
 				console.log('A socket disconnected.');
 			});
@@ -77,6 +79,9 @@ var App = function() {
 							console.log(error);
 						};
 					});
+				}
+				else {
+					console.log('No tweet status specified.');
 				}
 
 			});
