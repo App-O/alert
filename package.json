@@ -1,0 +1,24 @@
+{
+  "name": "alerts",
+  "version": "1.0.0",
+  "description": "Post alert messages via Twitter/SMS/mail",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/App-O/alerts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/App-O/alerts/issues"
+  },
+  "homepage": "https://github.com/App-O/alerts#readme",
+  "dependencies": {
+    "socket.io": "^1.7.1",
+    "yargs": "^6.4.0",
+    "yow": "^1.0.45"
+  }
+}
