@@ -6,6 +6,7 @@ var Path = require('path');
 var sprintf = require('yow/sprintf');
 var mkpath = require('yow/fs').mkpath;
 var isObject = require('yow/is').isObject;
+var isString = require('yow/is').isString;
 var logs = require('yow/logs');
 var Twitter = require('twitter');
 
@@ -29,6 +30,18 @@ var App = function() {
 		args.wrap(null);
 
 		args.check(function(argv) {
+			if (!isString(process.env.TWITTER_CONSUMER_KEY))
+				return "TWITTER_CONSUMER_KEY not set.";
+
+			if (!isString(process.env.TWITTER_CONSUMER_SECRET))
+				return "TWITTER_CONSUMER_SECRET not set.";
+
+			if (!isString(process.env.TWITTER_ACCESS_TOKEN_KEY))
+				return "TWITTER_ACCESS_TOKEN_KEY not set.";
+
+			if (!isString(process.env.TWITTER_ACCESS_TOKEN_SECRET))
+				return "TWITTER_ACCESS_TOKEN_SECRET not set.";
+
 			return true;
 		});
 
@@ -63,10 +76,10 @@ var App = function() {
 			socket.on('tweet', function(options) {
 
 				var client = new Twitter({
-					consumer_key: 'eFrUDj30QXyM4kjBeAevUIhik',
-					consumer_secret: '9X6Wln6wXFg9yGB574AoA4GIwYFWGNksqhTDFdUrtue3ut5uqI',
-					access_token_key: '802934085089951746-bnN7ElNsOyRlShcEtnQYh3e6Lrz2mlv',
-					access_token_secret: 'DxjDouf0UGcPY9r76SPxI5ZmqtKf7LqWMbLiqoi1apKpN'
+					consumer_key: process.env.TWITTER_CONSUMER_KEY,
+					consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+					access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+					access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 				});
 
 				if (options.status) {
