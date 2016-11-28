@@ -84,7 +84,7 @@ var App = function() {
 
 				if (options.status) {
 					var date = new Date();
-					var text = sprintf('%04d-%02d-%02d %02d:%02d:%02d\n%s', date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), options.status);
+					var text = sprintf('%04d-%02d-%02d %02d:%02d:%02d\n%s', date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), options.status);
 
 					client.post('statuses/update', {status: text},  function(error, tweet, response) {
 						if (error) {
