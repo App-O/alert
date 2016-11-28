@@ -9,6 +9,7 @@ var isObject = require('yow/is').isObject;
 var isString = require('yow/is').isString;
 var logs = require('yow/logs');
 var Twitter = require('twitter');
+var readJSON = require('yow/fs').readJSON;
 
 
 function debug() {
@@ -16,6 +17,11 @@ function debug() {
 }
 
 var App = function() {
+
+	function loadConfig() {
+		var configFile = Path.join(__dirname, 'alerts.config');
+		return readJSON(configFile);
+	}
 
 	function parseArgs() {
 
@@ -32,16 +38,18 @@ var App = function() {
 		args.wrap(null);
 
 		args.check(function(argv) {
-			if (!isString(process.env.TWITTER_CONSUMER_KEY))
+			var config = loadConfig();
+
+			if (!isString(config.TWITTER_CONSUMER_KEY))
 				return "TWITTER_CONSUMER_KEY not set.";
 
-			if (!isString(process.env.TWITTER_CONSUMER_SECRET))
+			if (!isString(config.TWITTER_CONSUMER_SECRET))
 				return "TWITTER_CONSUMER_SECRET not set.";
 
-			if (!isString(process.env.TWITTER_ACCESS_TOKEN_KEY))
+			if (!isString(config.TWITTER_ACCESS_TOKEN_KEY))
 				return "TWITTER_ACCESS_TOKEN_KEY not set.";
 
-			if (!isString(process.env.TWITTER_ACCESS_TOKEN_SECRET))
+			if (!isString(config.TWITTER_ACCESS_TOKEN_SECRET))
 				return "TWITTER_ACCESS_TOKEN_SECRET not set.";
 
 			return true;
@@ -54,11 +62,13 @@ var App = function() {
 	function tweet(options) {
 
 		try {
+			var config = loadConfig();
+
 			var client = new Twitter({
-				consumer_key: process.env.TWITTER_CONSUMER_KEY,
-				consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-				access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
-				access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+				consumer_key: config.TWITTER_CONSUMER_KEY,
+				consumer_secret: config.TWITTER_CONSUMER_SECRET,
+				access_token_key: config.TWITTER_ACCESS_TOKEN_KEY,
+				access_token_secret: config.TWITTER_ACCESS_TOKEN_SECRET
 			});
 
 			if (options.status) {
