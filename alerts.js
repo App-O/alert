@@ -22,9 +22,8 @@ var App = function() {
 		var args = require('yargs');
 
 		args.usage('Usage: $0 [options]');
-//		args.help('h').alias('h', 'help');
+		args.help('help').alias('help', 'h');
 
-		args.option('help', {alias: 'h', describe:'Show help'});
 		args.option('log', {alias: 'l', describe:'Log output to file'});
 		args.option('port', {alias: 'p', describe:'Listen to specified port', default:3911});
 
