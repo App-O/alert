@@ -18,6 +18,7 @@
   "homepage": "https://github.com/App-O/alerts#readme",
   "dependencies": {
     "socket.io": "^1.7.1",
+    "twitter": "^1.4.0",
     "yargs": "^6.4.0",
     "yow": "^1.0.45"
   }

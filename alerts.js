@@ -7,6 +7,7 @@ var sprintf = require('yow/sprintf');
 var mkpath = require('yow/fs').mkpath;
 var isObject = require('yow/is').isObject;
 var logs = require('yow/logs');
+var Twitter = require('twitter');
 
 
 function debug() {
@@ -58,7 +59,26 @@ var App = function() {
 			});
 
 			socket.on('tweet', function(options) {
-				console.log('tweet', options);
+
+				var client = new Twitter({
+					consumer_key: 'eFrUDj30QXyM4kjBeAevUIhik',
+					consumer_secret: '9X6Wln6wXFg9yGB574AoA4GIwYFWGNksqhTDFdUrtue3ut5uqI',
+					access_token_key: '802934085089951746-bnN7ElNsOyRlShcEtnQYh3e6Lrz2mlv',
+					access_token_secret: 'DxjDouf0UGcPY9r76SPxI5ZmqtKf7LqWMbLiqoi1apKpN'
+				});
+
+				if (options.status) {
+					var now = new Date();
+					var text = sprintf('%s: %s', now.toISOString(), options.status);
+
+					client.post('statuses/update', {status: text},  function(error, tweet, response) {
+						if (error) {
+							console.log('Tweet failed.');
+							console.log(error);
+						};
+					});
+				}
+
 			});
 
 		});
