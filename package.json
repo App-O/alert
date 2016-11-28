@@ -2,7 +2,7 @@
   "name": "alerts",
   "version": "1.0.0",
   "description": "Post alert messages via Twitter/SMS/mail",
-  "main": "index.js",
+  "main": "alerts.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
