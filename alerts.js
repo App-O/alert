@@ -20,7 +20,7 @@ var App = function() {
 	function parseArgs() {
 
 		console.log(process.env);
-		
+
 		var args = require('yargs');
 
 		args.usage('Usage: $0 [options]');
@@ -66,7 +66,7 @@ var App = function() {
 				var text = sprintf('%04d-%02d-%02d %02d:%02d:%02d\n%s', date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), options.status);
 
 				client.post('statuses/update', {status: text},  function(error, tweet, response) {
-					if (error)
+					if (error) {
 						console.log('Tweet failed.');
 						console.log(error);
 					};
